@@ -13,4 +13,75 @@ ngrok exposes local Shoutcast server behind NATs and firewalls to the public int
 ## python script
 it is a script in python lenguage that initiates the radio in the event that it should be started at a specific time every day. Once you start daemon script, it reads the time updating every half second and when it reads time when the radio should be activated, it started another scirpt colled 'open.py' that started each radio's element. When daemon reads a closing time of the radio, it starts 'close.py' that killed each process of the radio.
 ## ionic radio app
-Ionic Framework is an open source UI toolkit for building performant, high-quality mobile and desktop apps using web technologies — HTML, CSS, and JavaScript — with integrations for popular frameworks like Angular and React.
+Ionic Framework is an open source UI toolkit for building performant, high-quality mobile and desktop apps using web technologies — HTML, CSS, and JavaScript — with integrations for popular frameworks like Angular and React. Ionic is used to create a hybrid app. To connect shoutcast radio to ionic app should create a ionic project where
+### radio.page.ts
+
+  url:any;
+  stream: any;
+  promise: any;
+  isAdded: boolean = false;
+  result: any = [];
+  
+  constructor(
+    public alertCtrl: AlertController,
+    private http: HttpClient
+  ) {
+    this.url="https://<subdomainchosen>.ngrok.io/;stream.mp3";
+    this.stream= new Audio(this.url);
+}
+
+  async play(){
+    this.stream.play();
+    var timeradio = <The Radio's Hour>;
+    var time = new Date(Date.now()).getHours(); //get the hours
+      this.promise=new Promise((resolve, reject) => {
+        this.http.get(this.url) //a get request to the server
+          .toPromise()
+          .then(
+            res => { // Success
+              resolve();
+              },
+              msg=> { // Error
+              reject(msg);
+              if(timeradio!==time) //if the time doesn't corresponds at time of radio
+                this.presentAlertTime();
+              else 
+                this.presentAlertNet();
+              }
+          );
+      });
+  }
+
+  stop(){
+    this.stream.pause();
+  }
+
+  state() {
+    this.isAdded = !this.isAdded;
+    if(this.isAdded===true)
+      this.play();
+    else
+      this.stop();
+  }
+
+  async presentAlertTime() {
+    const alert = await this.alertCtrl.create({
+      header: 'Radio',
+      message: 'The radio isn't online now. It will be avaiable at <hour chosen>',
+      buttons: ['OK']
+    });
+    this.isAdded = !this.isAdded;
+    await alert.present();
+  }
+
+  async presentAlertNet() {
+    const alert = await this.alertCtrl.create({
+      header: 'Radio',
+      message: 'check your internet connection and try again',
+      buttons: ['OK']
+    });
+    this.isAdded = !this.isAdded;
+    await alert.present();
+  }
+}
+
