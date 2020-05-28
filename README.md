@@ -58,7 +58,7 @@ os.system('TASKKILL /F /IM winamp.exe')
 os.system('TASKKILL /F /IM ngrok.exe')
 ```
 ## ionic radio app
-Ionic Framework is an open source UI toolkit for building performant, high-quality mobile and desktop apps using web technologies — HTML, CSS, and JavaScript — with integrations for popular frameworks like Angular and React. Ionic is used to create a hybrid app. To connect shoutcast radio to ionic app should create a ionic project where
+Ionic Framework is an open source UI toolkit for building performant, high-quality mobile and desktop apps using web technologies — HTML, CSS, and JavaScript — with integrations for popular frameworks like Angular and React. To connect shoutcast radio to ionic app should create a ionic project and create or modify pages.
 ### radio.page.ts
 ```
   url:any;
