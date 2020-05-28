@@ -15,7 +15,7 @@ it is a script in python lenguage that initiates the radio in the event that it 
 ## ionic radio app
 Ionic Framework is an open source UI toolkit for building performant, high-quality mobile and desktop apps using web technologies — HTML, CSS, and JavaScript — with integrations for popular frameworks like Angular and React. Ionic is used to create a hybrid app. To connect shoutcast radio to ionic app should create a ionic project where
 ### radio.page.ts
-
+```
   url:any;
   stream: any;
   promise: any;
@@ -84,4 +84,4 @@ Ionic Framework is an open source UI toolkit for building performant, high-quali
     await alert.present();
   }
 }
-
+```
