@@ -12,6 +12,51 @@ Shoutcast is the radio's server that will distribute the sound at app
 ngrok exposes local Shoutcast server behind NATs and firewalls to the public internet over secure tunnels. This is necessary because shoutcast is hosted in http but if you use html audio with source shoutcast http in a website https, this source is updated from http to https and not run.
 ## python script
 it is a script in python lenguage that initiates the radio in the event that it should be started at a specific time every day. Once you start daemon script, it reads the time updating every half second and when it reads time when the radio should be activated, it started another scirpt colled 'open.py' that started each radio's element. When daemon reads a closing time of the radio, it starts 'close.py' that killed each process of the radio.
+### daemon.py
+```
+import datetime
+import time
+import subprocess
+
+start=datetime.time(hours, minutes, seconds)
+end=datetime.time(hours, minutes, seconds)
+
+if __name__=="__main__":
+	while True:
+		time_only = datetime.datetime.now().time().replace(microsecond=0)
+		print(time_only)
+		if time_only == daemon_start:
+			subprocess.Popen(["python", "open.py"])
+		if time_only == daemon_end:
+			subprocess.Popen(["python", "close.py"])
+		time.sleep(0.5)
+```
+### open.py
+```
+import os
+import time
+
+ShoutcastPath=	'Path of Shoutcast'
+WinampPath   =	'Path of Winamp'
+NgrokPath    =  'Path of Ngrok'
+CleverPath   =  'Path of Clever'
+
+os.system('start ' + ShoutcastPath + 'sc_serv')
+os.system('start ' + WinampPath	   + 'Winamp')
+time.sleep(1)
+os.chdir(CleverPath)
+os.system('clever loadplay PlaylistName')
+os.chdir(NgrokPath)
+os.system('ngrok.exe http --subdomain=SubdomainChosen 8000')
+```
+### close.py
+```
+import os
+
+os.system('TASKKILL /F /IM sc_serv.exe')
+os.system('TASKKILL /F /IM winamp.exe')
+os.system('TASKKILL /F /IM ngrok.exe')
+```
 ## ionic radio app
 Ionic Framework is an open source UI toolkit for building performant, high-quality mobile and desktop apps using web technologies — HTML, CSS, and JavaScript — with integrations for popular frameworks like Angular and React. Ionic is used to create a hybrid app. To connect shoutcast radio to ionic app should create a ionic project where
 ### radio.page.ts
