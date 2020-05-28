@@ -85,3 +85,9 @@ Ionic Framework is an open source UI toolkit for building performant, high-quali
   }
 }
 ```
+### radio.page.html
+```
+<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button (click)='state()' [color]="(isAdded) ? 'dark' : 'primary'"  size=''><ion-icon [name]="(isAdded) ? 'pause-outline' : 'play-outline'"></ion-icon></ion-fab-button>
+  </ion-fab>
+```
